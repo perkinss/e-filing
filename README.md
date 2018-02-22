@@ -1,6 +1,6 @@
 A test-driven node application
 
-[![Build Status](https://travis-ci.org/ericminio/yop-ux.svg?branch=master)](https://travis-ci.org/ericminio/yop-ux)
+[![Build Status](https://travis-ci.org/ericminio/e-filing.svg?branch=master)](https://travis-ci.org/ericminio/e-filing)
 
 ## Get ready
 

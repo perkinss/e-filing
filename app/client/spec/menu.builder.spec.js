@@ -1,8 +1,7 @@
 var chai = require('chai')
     , expect = chai.expect;
-chai.use(require('../support/document.contain.element.matcher'));
 var fs = require('fs');
-var externalApi = fs.readFileSync('app/client/scripts/menu.builder.js');
+var externalApi = fs.readFileSync('app/client/js/menu.builder.js');
 var createMenuDom = (new Function( externalApi + 'return createMenuDom;'))();
 var JSDOM = require('jsdom').JSDOM;
 

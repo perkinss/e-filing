@@ -1,13 +1,12 @@
 var chai = require('chai')
     , expect = chai.expect;
-chai.use(require('../support/document.contain.element.matcher'));
 
 describe('index.html', function() {
 
     describe('serving', function() {
 
         var Zombie = require("zombie");
-        var Server = require('../server/server');
+        var Server = require('../../server/server');
 
         var port = 5000;
         var url = 'http://localhost:' + port;
@@ -28,9 +27,6 @@ describe('index.html', function() {
                 .then(function() {
                     browser.assert.success();
                 })
-                .then(function() {
-                    expect(browser.query('body').innerHTML).to.contain('home');
-                })
                 .then(done, done);
         });
     });
@@ -47,7 +43,7 @@ describe('index.html', function() {
         });
 
         it('has the expected title', function() {
-            expect(document.getElementsByTagName('title')[0].innerHTML).to.equal('Welcome');
+            expect(document.getElementsByTagName('title')[0].innerHTML).to.equal('E-Filing');
         });
     });
 });

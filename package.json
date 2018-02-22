@@ -19,7 +19,7 @@
     },
     "scripts": {
         "start": "node start.js",
-        "test": "mocha app --recursive --exit",
-        "test:coverage": "istanbul cover node_modules/mocha/bin/_mocha -- app --recursive"
+        "test": "mocha app/server/spec/* app/client/spec/* --exit",
+        "test:coverage": "istanbul cover node_modules/mocha/bin/_mocha -- app/server/spec/* app/client/spec/*"
     }
 }

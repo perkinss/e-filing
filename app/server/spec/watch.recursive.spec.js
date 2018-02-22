@@ -1,12 +1,11 @@
 var chai = require('chai')
     , expect = chai.expect;
-chai.use(require('../support/document.contain.element.matcher'));
 var Zombie = require("zombie");
-var Server = require('../server/server');
+var Server = require('../server');
 var fs = require('fs');
 var path = require('path');
 
-describe('Modifying a file', function() {
+describe.skip('Modifying a nested file on Windows or MacOS', function() {
 
     var port = 5000;
     var url = 'http://localhost:' + port;
@@ -33,7 +32,7 @@ describe('Modifying a file', function() {
 
     beforeEach(function(done) {
         fileName = new Date().getTime();
-        filePath = path.join(__dirname, '../client/' + fileName + '.html');
+        filePath = path.join(__dirname, '../../client/css/' + fileName + '.html');
         fs.writeFileSync(filePath, content);
         server = new Server();
         server.start(port, done);
@@ -47,7 +46,7 @@ describe('Modifying a file', function() {
     it('triggers a reload', function(done) {
         const browser = new Zombie();
 
-        browser.visit(url + '/' + fileName + '.html')
+        browser.visit(url + '/css/' + fileName + '.html')
             .then(function() {
                 expect(browser.query('#welcome').innerHTML).to.equal('home');
             })
