@@ -8,7 +8,8 @@ var path = require('path');
 describe('Modifying a file', function() {
 
     var port = 5000;
-    var url = 'http://localhost:' + port;
+    var ip = 'localhost';
+    var url = 'http://' + ip + ':' + port;
     var fileName;
     var filePath;
     var content = `
@@ -35,7 +36,7 @@ describe('Modifying a file', function() {
         filePath = path.join(__dirname, '../../client/' + fileName + '.html');
         fs.writeFileSync(filePath, content);
         server = new Server();
-        server.start(port, done);
+        server.start(port, ip, done);
     });
 
     afterEach(function(done) {

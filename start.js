@@ -2,9 +2,11 @@ var Server = require('./app/server/server');
 
 var server = new Server();
 
-var port = 5003;
-server.start(port, function() {
-    console.log('listening on port ' + port);
+var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var ip = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
+
+server.start(port, ip, function() {
+    console.log(ip + ' listening on port ' + port);
 });
 
 module.exports = server;

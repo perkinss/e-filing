@@ -5,7 +5,7 @@ var path = require('path');
 function Server() {
 };
 
-Server.prototype.start = function (port, done) {
+Server.prototype.start = function (port, ip, done) {
     this.http = require('http').createServer(function(request, response) {
         if ('/' == request.url) { request.url = '/index.html'; }
 
@@ -45,7 +45,7 @@ Server.prototype.start = function (port, done) {
     fs.watch(path.join(__dirname, '../client/'), { recursive:true }, function(e, file) {
         self.sendReload();
     });
-    this.http.listen(port, done);
+    this.http.listen(port, ip, done);
 };
 
 Server.prototype.sendReload = function() {

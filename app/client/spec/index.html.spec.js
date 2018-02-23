@@ -9,11 +9,12 @@ describe('index.html', function() {
         var Server = require('../../server/server');
 
         var port = 5000;
-        var url = 'http://localhost:' + port;
+        var ip = 'localhost';
+        var url = 'http://' + ip + ':' + port;
 
         beforeEach(function(done) {
             server = new Server();
-            server.start(port, done);
+            server.start(port, ip, done);
         });
 
         afterEach(function(done) {

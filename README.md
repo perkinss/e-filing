@@ -27,7 +27,7 @@ npm start
 Open your browser and navigate to
 
 ```sh
-http://localhost:5003
+http://localhost:8080
 ```
 
 ## Start!

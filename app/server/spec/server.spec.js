@@ -6,11 +6,12 @@ describe('Server', function() {
 
     var server;
     var port = 5000;
-    var home = 'http://localhost:' + port;
+    var ip = 'localhost';
+    var home = 'http://' + ip + ':' + port;
 
     beforeEach(function(done) {
         server = new Server();
-        server.start(port, done);
+        server.start(port, ip, done);
     });
 
     afterEach(function(done) {
