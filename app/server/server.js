@@ -35,6 +35,24 @@ Server.prototype.start = function (port, ip, done) {
             content = fs.readFileSync(filePath);
             encoding = 'binary';
         }
+        if (/forms/.test(parsed.pathname)) {            
+            if (request.headers.cookie==undefined || request.headers.cookie.indexOf('token=cgi') == -1) {
+                response.writeHead(302, { 'Location':'/bceid.html?then='+parsed.pathname });
+                content = '';
+            }
+        }
+        if (/^\/bceid\.html$/.test(parsed.pathname)) {
+            if ('POST' == request.method) {
+                response.setHeader('Set-Cookie', ['token=cgi']);
+                response.writeHead(302, { 'Location':parsed.query.then });
+                content = '';
+            }
+        }
+        if (/^\/logout$/.test(parsed.pathname)) {       
+            response.setHeader('Set-Cookie', ['token=unknown']);     
+            response.writeHead(302, { 'Location':'/' });
+            content = '';
+        }
         response.write(content, encoding);
         response.end();
     });
