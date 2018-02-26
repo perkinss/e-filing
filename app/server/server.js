@@ -1,11 +1,13 @@
 var url = require('url');
 var fs = require('fs');
 var path = require('path');
+var remote = require('request');
 
-function Server() {
+function Server() {    
 };
 
 Server.prototype.start = function (port, ip, done) {
+    var self = this;
     this.http = require('http').createServer(function(request, response) {
         if ('/' == request.url) { request.url = '/index.html'; }
 
@@ -18,43 +20,52 @@ Server.prototype.start = function (port, ip, done) {
             response.statusCode = 404; 
             content = request.url;
         }
-        if (/\.js$/.test(parsed.pathname)) {
-            response.setHeader('Content-Type', 'application/javascript');
+        if (/forms/.test(parsed.pathname)) {    
+            var cookie = request.headers.cookie.substring(request.headers.cookie.indexOf('token'));
+            var cookieJar = remote.jar();
+            var cookie = remote.cookie(cookie);            
+            var guardianValidate = self.guardian.validate;
+            cookieJar.setCookie(cookie, guardianValidate);
+            remote({url: guardianValidate, jar: cookieJar}, function(err, resp, body) {
+                if (resp.statusCode == 403) {
+                    var location = self.guardian.login + '?then=http://' + request.headers['host'] + parsed.pathname;
+                    response.writeHead(302, { 'Location':location });
+                    response.write('', encoding);
+                    response.end();
+                } 
+                else {
+                    response.setHeader('Content-Type', 'text/html');       
+                    response.write(content, encoding);
+                    response.end();             
+                }
+            });            
         }
-        if (/\.css$/.test(parsed.pathname)) {
-            response.setHeader('Content-Type', 'text/css');
-        }
-        if (/\.html$/.test(parsed.pathname)) {
-            response.setHeader('Content-Type', 'text/html');
-        }
-        if (/\.data$/.test(parsed.pathname)) {
-            response.setHeader('Content-Type', 'text/plain');
-        }
-        if (/\.png$/.test(parsed.pathname)) {
-            response.setHeader('Content-Type', 'image/png');
-            content = fs.readFileSync(filePath);
-            encoding = 'binary';
-        }
-        if (/forms/.test(parsed.pathname)) {            
-            if (request.headers.cookie==undefined || request.headers.cookie.indexOf('token=cgi') == -1) {
-                response.writeHead(302, { 'Location':'/bceid.html?then='+parsed.pathname });
+        else {
+            if (/\.js$/.test(parsed.pathname)) {
+                response.setHeader('Content-Type', 'application/javascript');
+            }
+            if (/\.css$/.test(parsed.pathname)) {
+                response.setHeader('Content-Type', 'text/css');
+            }
+            if (/\.html$/.test(parsed.pathname)) {
+                response.setHeader('Content-Type', 'text/html');
+            }
+            if (/\.data$/.test(parsed.pathname)) {
+                response.setHeader('Content-Type', 'text/plain');
+            }
+            if (/\.png$/.test(parsed.pathname)) {
+                response.setHeader('Content-Type', 'image/png');
+                content = fs.readFileSync(filePath);
+                encoding = 'binary';
+            }
+            if (/^\/logout$/.test(parsed.pathname)) {       
+                response.setHeader('Set-Cookie', ['token=unknown']);     
+                response.writeHead(302, { 'Location':'/' });
                 content = '';
             }
+            response.write(content, encoding);
+            response.end();
         }
-        if (/^\/bceid\.html$/.test(parsed.pathname)) {
-            if ('POST' == request.method) {
-                response.setHeader('Set-Cookie', ['token=cgi']);
-                response.writeHead(302, { 'Location':parsed.query.then });
-                content = '';
-            }
-        }
-        if (/^\/logout$/.test(parsed.pathname)) {       
-            response.setHeader('Set-Cookie', ['token=unknown']);     
-            response.writeHead(302, { 'Location':'/' });
-            content = '';
-        }
-        response.write(content, encoding);
-        response.end();
     });
     this.io = require('socket.io')(this.http);
     this.io.on('connection', function(socket) {
@@ -73,6 +84,10 @@ Server.prototype.sendReload = function() {
 Server.prototype.stop = function (done) {
     this.http.close();
     done();
+};
+
+Server.prototype.useGuardian = function(guardian) {
+    this.guardian = guardian;
 };
 
 module.exports = Server;

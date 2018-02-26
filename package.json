@@ -2,7 +2,9 @@
     "name": "tdd-ready-node",
     "version": "1.0.0",
     "private": false,
-    "dependencies": {},
+    "dependencies": {
+        "querystring": "^0.2.0"
+    },
     "devDependencies": {
         "chai": "latest",
         "istanbul": "latest",

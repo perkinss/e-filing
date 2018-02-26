@@ -79,6 +79,7 @@
                             </div>
 
                             <div class="login-form-action">
+                                <input name="then" type="hidden" value="then-value" />
                                 <input type="submit" name="btnSubmit" class="btn btn-primary"
                                        value="Continue"/>
                             </div>
@@ -121,14 +122,6 @@
         </div>
     </div>
 </footer>
-
-<script src="/socket.io/socket.io.js"></script>
-<script>
-    var socket = io();
-    socket.on('reload', function() {
-        document.location.reload(true);
-    });
-</script>
 
 </body>
 </html>
