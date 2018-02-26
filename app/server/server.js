@@ -7,6 +7,11 @@ function Server() {
 };
 
 Server.prototype.start = function (port, ip, done) {
+    if (this.guardian === undefined 
+        ||this.guardian.validate === undefined 
+        || this.guardian.login === undefined) {
+        throw '{ validate:foo, login:bar } guardian is mandatory';        
+    }
     var self = this;
     this.http = require('http').createServer(function(request, response) {
         if ('/' == request.url) { request.url = '/index.html'; }
@@ -80,7 +85,9 @@ Server.prototype.sendReload = function() {
 };
 
 Server.prototype.stop = function (done) {
-    this.http.close();
+    if (this.http) {
+        this.http.close();
+    }
     done();
 };
 

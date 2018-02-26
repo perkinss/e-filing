@@ -11,11 +11,28 @@ describe('Server', function() {
 
     beforeEach(function(done) {
         server = new Server();
+        server.useGuardian({ validate:'any', login:'any' });
         server.start(port, ip, done);
     });
 
     afterEach(function(done) {
         server.stop(done);
+    });
+
+    it('needs a guardian', function() {
+        var failed = false;
+        var server;
+        try {
+            server = new Server();
+            server.useGuardian({ any:'value' });
+            server.start(port+1, ip, server.stop(function() {}));            
+        }
+        catch (error) {
+            failed = true;
+            expect(error).to.equal('{ validate:foo, login:bar } guardian is mandatory');
+        }
+        
+        expect(failed).to.equal(true);
     });
 
     it('serves index.html', function(done) {

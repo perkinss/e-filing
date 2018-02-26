@@ -21,6 +21,7 @@
     },
     "scripts": {
         "start": "node start.js",
+        "start-fake-bceid-server": "node start.fake.bceid.server.js",
         "test": "mocha app/server/spec/* app/client/spec/* --exit",
         "test:coverage": "istanbul cover node_modules/mocha/bin/_mocha -- app/server/spec/* app/client/spec/*"
     }
