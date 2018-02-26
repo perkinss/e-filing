@@ -14,6 +14,7 @@ describe('index.html', function() {
 
         beforeEach(function(done) {
             server = new Server();
+            server.useGuardian({ validate:'any', login:'any' });
             server.start(port, ip, done);
         });
 

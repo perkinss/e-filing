@@ -36,6 +36,7 @@ describe.skip('Modifying a nested file on Windows or MacOS', function() {
         filePath = path.join(__dirname, '../../client/css/' + fileName + '.html');
         fs.writeFileSync(filePath, content);
         server = new Server();
+        server.useGuardian({ validate:'any', login:'any' });
         server.start(port, ip, done);
     });
 

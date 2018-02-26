@@ -18,7 +18,8 @@ describe('Forms access', function() {
         beforeEach(function(done) {                
             server = new Server();
             server.useGuardian({
-                validate: 'http://localhost:5001/validate'
+                validate: 'http://localhost:5001/validate',
+                login: 'any'
             });        
             server.start(port, ip, function() {
                 guardian = require('http').createServer(function(request, response) {
@@ -122,6 +123,7 @@ describe('logout', function() {
 
     beforeEach(function(done) {                
         server = new Server();
+        server.useGuardian({ validate:'any', login:'any' });
         server.start(port, ip, done);
     });
 
