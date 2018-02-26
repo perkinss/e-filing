@@ -21,12 +21,10 @@ Server.prototype.start = function (port, ip, done) {
             content = request.url;
         }
         if (/forms/.test(parsed.pathname)) {    
-            var cookie = request.headers.cookie.substring(request.headers.cookie.indexOf('token'));
+            var keyValue = request.headers.cookie.substring(request.headers.cookie.indexOf('token'));
             var cookieJar = remote.jar();
-            var cookie = remote.cookie(cookie);            
-            var guardianValidate = self.guardian.validate;
-            cookieJar.setCookie(cookie, guardianValidate);
-            remote({url: guardianValidate, jar: cookieJar}, function(err, resp, body) {
+            cookieJar.setCookie(remote.cookie(keyValue), self.guardian.validate);
+            remote({url: self.guardian.validate, jar: cookieJar}, function(err, resp, body) {
                 if (resp.statusCode == 403) {
                     var location = self.guardian.login + '?then=http://' + request.headers['host'] + parsed.pathname;
                     response.writeHead(302, { 'Location':location });

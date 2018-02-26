@@ -38,7 +38,7 @@ describe('Forms access', function() {
 
         it ('is allowed', function(done) {
             var cookieJar = request.jar();
-            var cookie = request.cookie('token=cgi');
+            var cookie = request.cookie('token=willacceptanyvalue');
             var url = home + '/forms/form.2.html';
             cookieJar.setCookie(cookie, url);
 
@@ -84,7 +84,21 @@ describe('Forms access', function() {
 
         it ('is not allowed', function(done) {
             var cookieJar = request.jar();
-            var cookie = request.cookie('token=unknown');
+            var cookie = request.cookie('token=willrejectanyvalue');
+            var url = home + '/forms/form.2.html';
+            cookieJar.setCookie(cookie, url);
+
+            request({url: url, jar: cookieJar}, function(err, response, body) {
+                expect(response.statusCode).to.equal(200);
+                expect(body).to.contain('login requested');
+                expect(response.request.path).to.equal('/login?then=' + url);
+                done();
+            });
+        });
+
+        it ('is not allowed when cookie is missing', function(done) {
+            var cookieJar = request.jar();
+            var cookie = request.cookie('any=value');
             var url = home + '/forms/form.2.html';
             cookieJar.setCookie(cookie, url);
 

@@ -7,7 +7,7 @@ server.start(port, ip, function() {
 });
 
 var FakeBceIDServer = require('./app/server/fake.bceid.server');
-var fakeserver = new FakeBceIDServer();
+var fakeserver = new FakeBceIDServer({token:'bceid'});
 var fakeport = process.env.OPENSHIFT_NODEJS_PORT || 8081;
 var fakeip = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 fakeserver.start(fakeport, fakeip, function() {

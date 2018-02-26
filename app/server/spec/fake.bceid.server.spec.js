@@ -11,7 +11,7 @@ describe('Fake BCeID Server', function() {
     var home = 'http://' + ip + ':' + port;
 
     beforeEach(function(done) {
-        server = new FakeBceIDServer();
+        server = new FakeBceIDServer({token:'monday'});
         server.start(port, ip, done);
     });
 
@@ -51,7 +51,7 @@ describe('Fake BCeID Server', function() {
     
         it('sets the cookie', function(done) {
             request.post(home + '/bceid.html', {form:{user:'you', password:'any', then:'anywhere'}}, function(err, response, body) {
-                expect(response.headers['set-cookie']).to.deep.equal(['token=cgi']);
+                expect(response.headers['set-cookie']).to.deep.equal(['token=monday']);
                 done();
             });
         });       
@@ -81,7 +81,7 @@ describe('Fake BCeID Server', function() {
 
     it('accepts only one token', function(done) {
         var cookieJar = request.jar();
-        var cookie = request.cookie('token=cgi');
+        var cookie = request.cookie('token=monday');
         var url = home + '/validate';
         cookieJar.setCookie(cookie, url);
 

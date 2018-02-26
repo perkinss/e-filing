@@ -3,7 +3,8 @@ var fs = require('fs');
 var path = require('path');
 var qs = require('querystring');
 
-function Server() {
+function Server(options) {
+    this.token = options.token;
 };
 
 Server.prototype.start = function (port, ip, done) {
@@ -22,7 +23,7 @@ Server.prototype.start = function (port, ip, done) {
         }
         if (/^\/bceid\.html$/.test(parsed.pathname)) {
             if ('POST' == request.method) {
-                response.setHeader('Set-Cookie', ['token=cgi']);                
+                response.setHeader('Set-Cookie', ['token=' + self.token]);                
 
                 var body = '';
                 request.on('data', function (data) {
@@ -45,7 +46,7 @@ Server.prototype.start = function (port, ip, done) {
             response.statusCode = 403;
             content = 'KO';
             if (request.headers.cookie 
-                && request.headers.cookie.indexOf('token=cgi') != -1) {
+                && request.headers.cookie.indexOf('token=' + self.token) != -1) {
                 response.statusCode = 200;
                 content = 'OK';
             }            
