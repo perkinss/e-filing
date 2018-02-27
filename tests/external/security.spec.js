@@ -1,8 +1,8 @@
 var chai = require('chai')
     , expect = chai.expect;
-var LocalValidator = require('../../app/server/local.validator');
+var LocalServer = require('../../app/server/fake.bceid.form');
 
-describe.only('Form access', function() {
+describe('Form access', function() {
 
     var Zombie = require("zombie");
     var Server = require('../../app/server/server');
@@ -11,15 +11,12 @@ describe.only('Form access', function() {
     var ip = 'localhost';
     var home = 'http://' + ip + ':' + port;
     var validator;
+    var localLoginServer;
 
     beforeEach(function(done) {
-        validator = new LocalValidator({token:'monday'});
+        localLoginServer = new LocalServer({token:'monday', home:home});
         server = new Server();
-        server.useGuardian({ 
-            validate: home + '/validate', 
-            login: home + '/login',
-            validator: validator
-        });
+        server.useGuardian(localLoginServer);
         server.start(port, ip, done);
     });
 

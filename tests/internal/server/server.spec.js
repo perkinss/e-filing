@@ -11,7 +11,7 @@ describe('Server', function() {
 
     beforeEach(function(done) {
         server = new Server();
-        server.useGuardian({ validate:'any', login:'any' });
+        server.useGuardian({ isLogin:function() { return false;} });
         server.start(port, ip, done);
     });
 
@@ -29,7 +29,7 @@ describe('Server', function() {
         }
         catch (error) {
             failed = true;
-            expect(error).to.equal('{ validate:foo, login:bar } guardian is mandatory');
+            expect(error).to.equal('{ isLogin:function } guardian is mandatory');
         }
         
         expect(failed).to.equal(true);

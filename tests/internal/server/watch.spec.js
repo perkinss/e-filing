@@ -36,7 +36,7 @@ describe('Modifying a file', function() {
         filePath = path.join(__dirname, '../../../app/client/' + fileName + '.html');
         fs.writeFileSync(filePath, content);
         server = new Server();
-        server.useGuardian({ validate:'any', login:'any' });
+        server.useGuardian({ isLogin:function() { return false;} });
         server.start(port, ip, done);
     });
 

@@ -22,7 +22,6 @@
     "scripts": {
         "test": "npm run internal-tests",
         "start": "node start.js",
-        "start-fake-bceid-server": "node start.fake.bceid.server.js",
         "external-tests": "mocha tests/external --recursive --exit --timeout 0",
         "internal-tests": "mocha tests/internal --recursive --exit",
         "test:coverage": "istanbul cover node_modules/mocha/bin/_mocha -- app/server/spec/* app/client/spec/*"
