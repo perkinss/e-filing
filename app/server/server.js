@@ -46,6 +46,11 @@ Server.prototype.start = function (port, ip, done) {
                 self.bceidServer.handleLogin(request, response);                
             } 
             else {                
+                if (/^\/logout$/.test(parsed.pathname)) {       
+                    response.setHeader('Set-Cookie', ['token=unknown']);     
+                    response.writeHead(302, { 'Location':'/' });
+                    content = '';
+                }                
                 if (/\.js$/.test(parsed.pathname)) {
                     response.setHeader('Content-Type', 'application/javascript');
                 }
@@ -63,11 +68,6 @@ Server.prototype.start = function (port, ip, done) {
                     content = fs.readFileSync(filePath);
                     encoding = 'binary';
                 }
-                if (/^\/logout$/.test(parsed.pathname)) {       
-                    response.setHeader('Set-Cookie', ['token=unknown']);     
-                    response.writeHead(302, { 'Location':'/' });
-                    content = '';
-                }                
                 response.write(content, encoding);
                 response.end();
             }            

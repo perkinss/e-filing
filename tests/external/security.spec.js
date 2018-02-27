@@ -26,7 +26,7 @@ describe('Form access', function() {
 
         browser.visit(home + '/index.html')
             .then(function() {
-                browser.assert.success();
+                return browser.assert.success();
             })
             .then(function() {
                 return browser.clickLink('#form2');
@@ -42,7 +42,7 @@ describe('Form access', function() {
 
         browser.visit(home + '/index.html')
             .then(function() {
-                browser.assert.success();
+                return browser.assert.success();
             })
             .then(function() {
                 return browser.clickLink('#form2');
@@ -54,7 +54,7 @@ describe('Form access', function() {
                 return browser.pressButton('Continue');
             })
             .then(function() {
-                browser.assert.text('title', 'E-Filing - Form 2');
+                return browser.assert.text('title', 'E-Filing - Form 2');
             })
             .then(function() {
                 return browser.clickLink('#home');
@@ -63,7 +63,38 @@ describe('Form access', function() {
                 return browser.clickLink('#form7');
             })
             .then(function() {
-                browser.assert.text('title', 'E-Filing - Form 7');
+                return browser.assert.text('title', 'E-Filing - Form 7');
+            })
+            .then(done, done);
+    });
+
+    it('is needed again after logout', function(done) {
+        const browser = new Zombie();
+
+        browser.visit(home + '/index.html')
+            .then(function() {
+                return browser.assert.success();
+            })
+            .then(function() {
+                return browser.clickLink('#form2');
+            })
+            .then(function() {
+                browser
+                    .fill('user', 'any-user')
+                    .fill('password', 'any');                
+                return browser.pressButton('Continue');
+            })
+            .then(function() {
+                return browser.assert.text('title', 'E-Filing - Form 2');
+            })
+            .then(function() {
+                return browser.clickLink('#logout');
+            })
+            .then(function() {
+                return browser.clickLink('#form7');
+            })
+            .then(function() {
+                return browser.assert.element('form input[name=user]');
             })
             .then(done, done);
     });
