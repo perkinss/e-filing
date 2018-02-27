@@ -8,7 +8,6 @@ function Server() {
 Server.prototype.start = function (port, ip, done) {
     if (this.guardian === undefined 
         ||this.guardian.isLogin === undefined 
-    //     || this.guardian.login === undefined
     ) {
         throw '{ isLogin:function } guardian is mandatory';        
     }
