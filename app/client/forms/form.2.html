@@ -103,7 +103,7 @@
             <ol class="breadcrumb">
 
                 <li>
-                    <a id="home" href="/index.html">back Home</a>
+                    <a id="home" href="/index.html">Home</a>
                 </li>
                 <li>
                     <a href="#">Form 2</a>
@@ -115,23 +115,46 @@
         <div class="row">
 
             <div id="main-content" role="main" class="contentPageMainColumn col-sm-12">
-                <a id="main-content-anchor"></a>
-                <h1>Form 2 (RULES 5 (A), 13 (A) AND 17 (A))</h1>
-                <div id="introduction">
-                    
-                </div>
-
-                <div id="body">
-                    <h2>NOTICE OF APPEARANCE</h2>
-                    
-                </div>
 
                 <div id="steps">
                     <ol>
                         <li><span class="step-circle checked"><i class="fas fa-check"></i></span><span class="step-title done">Access</span></li>
                         <li><span class="step-circle in-progress">2</span><span class="step-title in-progress">Form 2</span></li>
                         <li><span class="step-circle future">3</span><span class="step-title future">Preview</span></li>
+                        <li><span class="step-circle future">4</span><span class="step-title future">Payment</span></li>
                     </ol>
+                </div>
+
+                <div class="form-title">
+                    <h1>NOTICE OF APPEARANCE</h1>
+                    Form 2 (RULES 5 (A), 13 (A) AND 17 (A))
+                </div>
+    
+                <div class="form-section">
+                    <h2>Court of appeal case information</h2>
+                    Find the court of appeal case this notice of appearance is refering to.
+
+                    <table>
+                        <tr>
+                            <td>LEVEL OF COURT</td>
+                            <td>COURT OF APPEAL FILE NO.</td>
+                            <td>SUPREME COURT REGISTRY</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><input disabled value="Court of appeal" /></td>
+                            <td><input name="file-no" autofocus/></td>
+                            <td>
+                                <select>
+                                    <option>Victoria</option>
+                                    <option>Vancouver</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary btn-find-case">Find</button>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
                 
             </div>
