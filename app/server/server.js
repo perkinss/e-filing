@@ -1,7 +1,7 @@
 var url = require('url');
 var fs = require('fs');
 var path = require('path');
-var remote = require('request');
+var qs = require('querystring');
 
 function Server() {    
 };
@@ -26,49 +26,73 @@ Server.prototype.start = function (port, ip, done) {
             content = request.url;
         }
         if (/forms/.test(parsed.pathname)) {    
-            var keyValue = request.headers.cookie.substring(request.headers.cookie.indexOf('token'));
-            var cookieJar = remote.jar();
-            cookieJar.setCookie(remote.cookie(keyValue), self.guardian.validate);
-            remote({url: self.guardian.validate, jar: cookieJar}, function(err, resp, body) {
-                if (resp.statusCode == 403) {
+            self.guardian.validator.validate(request, function(status) {
+                if (status.code == 200) {
+                    response.setHeader('Content-Type', 'text/html');
+                    response.write(content, encoding);
+                    response.end();
+                }
+                else {
                     var location = self.guardian.login + '?then=http://' + request.headers['host'] + parsed.pathname;
                     response.writeHead(302, { 'Location':location });
                     response.write('', encoding);
                     response.end();
-                } 
-                else {
-                    response.setHeader('Content-Type', 'text/html');       
-                    response.write(content, encoding);
-                    response.end();             
                 }
-            });            
+            });           
         }
         else {
-            if (/\.js$/.test(parsed.pathname)) {
-                response.setHeader('Content-Type', 'application/javascript');
-            }
-            if (/\.css$/.test(parsed.pathname)) {
-                response.setHeader('Content-Type', 'text/css');
-            }
-            if (/\.html$/.test(parsed.pathname)) {
-                response.setHeader('Content-Type', 'text/html');
-            }
-            if (/\.data$/.test(parsed.pathname)) {
-                response.setHeader('Content-Type', 'text/plain');
-            }
-            if (/\.png$/.test(parsed.pathname)) {
-                response.setHeader('Content-Type', 'image/png');
-                content = fs.readFileSync(filePath);
-                encoding = 'binary';
-            }
-            if (/^\/logout$/.test(parsed.pathname)) {       
-                response.setHeader('Set-Cookie', ['token=unknown']);     
-                response.writeHead(302, { 'Location':'/' });
-                content = '';
-            }
-            response.write(content, encoding);
-            response.end();
-        }
+            if (/^\/login$/.test(parsed.pathname)) {
+                response.statusCode = 200;
+                if ('POST' == request.method) {    
+                    response.setHeader('Set-Cookie', ['token=' + self.guardian.validator.token]);
+                    var body = '';
+                    request.on('data', function (data) {
+                        body += data;
+                    });
+                    request.on('end', function () {
+                        var form = qs.parse(body); 
+                        response.writeHead(302, { 'Location':form.then });
+                        response.write('', encoding);
+                        response.end();
+                    });
+                }
+                else {                    
+                    filePath = path.join(__dirname, '../client/bceid.html');
+                    content = fs.readFileSync(filePath).toString();
+                    content = content.replace('then-value', parsed.query.then);
+                    response.setHeader('Content-Type', 'text/html');
+                    response.statusCode = 200; 
+                    response.write(content, encoding);
+                    response.end();
+                }
+            } 
+            else {                
+                if (/\.js$/.test(parsed.pathname)) {
+                    response.setHeader('Content-Type', 'application/javascript');
+                }
+                if (/\.css$/.test(parsed.pathname)) {
+                    response.setHeader('Content-Type', 'text/css');
+                }
+                if (/\.html$/.test(parsed.pathname)) {
+                    response.setHeader('Content-Type', 'text/html');
+                }
+                if (/\.data$/.test(parsed.pathname)) {
+                    response.setHeader('Content-Type', 'text/plain');
+                }
+                if (/\.png$/.test(parsed.pathname)) {
+                    response.setHeader('Content-Type', 'image/png');
+                    content = fs.readFileSync(filePath);
+                    encoding = 'binary';
+                }
+                if (/^\/logout$/.test(parsed.pathname)) {       
+                    response.setHeader('Set-Cookie', ['token=unknown']);     
+                    response.writeHead(302, { 'Location':'/' });
+                    content = '';
+                }                
+                response.write(content, encoding);
+                response.end();
+            }            
+        }        
     });
     this.io = require('socket.io')(this.http);
     this.io.on('connection', function(socket) {

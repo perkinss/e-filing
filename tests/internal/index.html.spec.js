@@ -1,12 +1,12 @@
 var chai = require('chai')
     , expect = chai.expect;
+var Zombie = require("zombie");
+var Server = require('../../app/server/server');
 
 describe('index.html', function() {
 
     describe('serving', function() {
 
-        var Zombie = require("zombie");
-        var Server = require('../../server/server');
 
         var port = 5000;
         var ip = 'localhost';

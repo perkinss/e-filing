@@ -1,9 +1,9 @@
 var chai = require('chai')
     , expect = chai.expect;
 var Zombie = require("zombie");
-var Server = require('../server');
 var fs = require('fs');
 var path = require('path');
+var Server = require('../../../app/server/server');
 
 describe('Modifying a file', function() {
 
@@ -33,7 +33,7 @@ describe('Modifying a file', function() {
 
     beforeEach(function(done) {
         fileName = new Date().getTime();
-        filePath = path.join(__dirname, '../../client/' + fileName + '.html');
+        filePath = path.join(__dirname, '../../../app/client/' + fileName + '.html');
         fs.writeFileSync(filePath, content);
         server = new Server();
         server.useGuardian({ validate:'any', login:'any' });

@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
-var Server = require('../server');
 var request = require('request');
+var Server = require('../../../app/server/server');
 
 describe('Server', function() {
 
