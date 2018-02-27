@@ -1,8 +1,7 @@
 A test-driven node application
 
 [![Build Status](https://travis-ci.org/ericminio/e-filing.svg?branch=master)](https://travis-ci.org/ericminio/e-filing)
-
-Working software: [here on openshift](http://manual-learning-openshift.193b.starter-ca-central-1.openshiftapps.com/)
+[https://img.shields.io/badge/working%20software-openshift-brightgreen.svg](http://manual-learning-openshift.193b.starter-ca-central-1.openshiftapps.com/)
 
 ## Get ready
 
