@@ -9,12 +9,14 @@
 }
 #steps ol {
 	padding: 0px;
+	width: 100%;
 }
 #steps ol li
 {
 	display:inline-block;
 	list-style-type: none;
-	margin-right: 30px;
+	width: 20%;
+	white-space: nowrap;
 }
 .step-circle {
 	display:inline-block;
@@ -51,9 +53,16 @@
 .form-section {
 	background-color: white;
 	padding: 15px;
+	margin-bottom: 15px;
 }
-.btn-find-case {
+.btn-green {
 	background-color: green;
 	border-radius: 3px;
 	border-color: green;
+}
+#access-list {
+	width: 100%
+}
+#access-list th {
+	background-color: lightblue;
 }
