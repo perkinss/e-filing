@@ -1,0 +1,36 @@
+#steps ol {
+	padding: 0px;
+}
+#steps ol li
+{
+	display:inline-block;
+	list-style-type: none;
+}
+.step-circle {
+	display:inline-block;
+	border: 1px black solid;
+	border-radius: 50%;
+	vertical-align: middle;
+	text-align: center;
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+}
+.checked {
+	background-color: green;
+	color: white;
+}
+.done {
+	color: green;
+}
+.in-progress {
+	color: black;
+	border-color: black;
+}
+.future {
+	color: lightgray;
+	border-color: lightgray;
+}
+.step-title {
+	margin-left: 1px;
+}
