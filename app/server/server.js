@@ -6,10 +6,10 @@ function Server() {
 };
 
 Server.prototype.start = function (port, ip, done) {
-    if (this.guardian === undefined 
-        ||this.guardian.isLogin === undefined 
+    if (this.bceidServer === undefined 
+        ||this.bceidServer.isLogin === undefined 
     ) {
-        throw '{ isLogin:function } guardian is mandatory';        
+        throw '{ isLogin:function } bceidServer is mandatory';        
     }
     var self = this;
     this.http = require('http').createServer(function(request, response) {
@@ -25,7 +25,7 @@ Server.prototype.start = function (port, ip, done) {
             content = request.url;
         }
         if (/forms/.test(parsed.pathname)) {    
-            self.guardian.validate(request, function(status) {
+            self.bceidServer.validateToken(request, function(status) {
                 if (status.code == 200) {
                     response.setHeader('Content-Type', 'text/html');
                     response.write(content, encoding);
@@ -33,7 +33,7 @@ Server.prototype.start = function (port, ip, done) {
                 }
                 else {
                     var target = request.headers['host'] + parsed.pathname;
-                    var location = self.guardian.buildLoginUrl(request.headers['host'], target);
+                    var location = self.bceidServer.buildLoginUrl(request.headers['host'], target);
                     response.writeHead(302, { 'Location':location });
                     response.write('', encoding);
                     response.end();
@@ -41,9 +41,9 @@ Server.prototype.start = function (port, ip, done) {
             });           
         }
         else {
-            if (self.guardian.isLogin(parsed.pathname)) {
+            if (self.bceidServer.isLogin(parsed.pathname)) {
                 response.statusCode = 200;
-                self.guardian.handle(request, response);                
+                self.bceidServer.handleLogin(request, response);                
             } 
             else {                
                 if (/\.js$/.test(parsed.pathname)) {
@@ -94,8 +94,8 @@ Server.prototype.stop = function (done) {
     done();
 };
 
-Server.prototype.useGuardian = function(guardian) {
-    this.guardian = guardian;
+Server.prototype.useBceidServer = function(bceidServer) {
+    this.bceidServer = bceidServer;
 };
 
 module.exports = Server;

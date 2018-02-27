@@ -1,22 +1,19 @@
 var chai = require('chai')
     , expect = chai.expect;
-var LocalServer = require('../../app/server/fake.bceid.form');
+var Zombie = require("zombie");
+var Server = require('../../app/server/server');
+var FakeBceIDServer = require('../../app/server/fake.bceid.server');
 
 describe('Form access', function() {
-
-    var Zombie = require("zombie");
-    var Server = require('../../app/server/server');
 
     var port = 5000;
     var ip = 'localhost';
     var home = 'http://' + ip + ':' + port;
-    var validator;
-    var localLoginServer;
 
     beforeEach(function(done) {
-        localLoginServer = new LocalServer({token:'monday'});
+        fakeBCeIDServer = new FakeBceIDServer({token:'monday'});
         server = new Server();
-        server.useGuardian(localLoginServer);
+        server.useBceidServer(fakeBCeIDServer);
         server.start(port, ip, done);
     });
 

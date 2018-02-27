@@ -5,12 +5,12 @@ var path = require('path');
 
 var self;
 
-function Authentificator(options) {    
+function FakeBceIDServer(options) {    
     this.token = options.token;
     self = this;
 };
 
-Authentificator.prototype.validate = function(request, callback) {  
+FakeBceIDServer.prototype.validateToken = function(request, callback) {  
     var status = {
         code: 403
     };
@@ -22,7 +22,15 @@ Authentificator.prototype.validate = function(request, callback) {
     callback(status);         
 };
 
-Authentificator.prototype.handle = function(request, response) {
+FakeBceIDServer.prototype.buildLoginUrl = function(base, target) {
+    return 'http://' + base + '/login?then=http://' + target
+};
+
+FakeBceIDServer.prototype.isLogin = function(url) {
+    return /^\/login$/.test(url);
+};
+
+FakeBceIDServer.prototype.handleLogin = function(request, response) {
     var parsed = url.parse(request.url, true);
     if ('POST' == request.method) {    
         response.setHeader('Set-Cookie', ['token=' + self.token]);
@@ -48,12 +56,4 @@ Authentificator.prototype.handle = function(request, response) {
     }
 };
 
-Authentificator.prototype.buildLoginUrl = function(base, target) {
-    return 'http://' + base + '/login?then=http://' + target
-};
-
-Authentificator.prototype.isLogin = function(url) {
-    return /^\/login$/.test(url);
-};
-
-module.exports = Authentificator;
+module.exports = FakeBceIDServer;
