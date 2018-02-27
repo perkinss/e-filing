@@ -7,7 +7,6 @@ var self;
 
 function Authentificator(options) {    
     this.token = options.token;
-    this.home = options.home;
     self = this;
 };
 
