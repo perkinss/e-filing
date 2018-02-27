@@ -20,6 +20,7 @@
         "zombie": "latest"
     },
     "scripts": {
+        "test": "npm run internal-tests",
         "start": "node start.js",
         "start-fake-bceid-server": "node start.fake.bceid.server.js",
         "external-tests": "mocha tests/external --recursive --exit --timeout 0",
