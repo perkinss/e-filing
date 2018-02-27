@@ -49,20 +49,19 @@ Server.prototype.start = function (port, ip, done) {
                 }
             });           
         }
+        else if (self.bceidServer.isLogin(parsed.pathname)) {
+            self.bceidServer.handleLogin(request, response);                
+        } 
+        else if (self.bceidServer.isLogout(parsed.pathname)) {   
+            self.bceidServer.logout(response);                        
+            response.writeHead(302, { 'Location':'/' });
+            response.write('', encoding);
+            response.end(); 
+        }   
         else {
-            if (self.bceidServer.isLogin(parsed.pathname)) {
-                self.bceidServer.handleLogin(request, response);                
-            } 
-            else {                
-                if (self.bceidServer.isLogout(parsed.pathname)) {   
-                    self.bceidServer.logout(response);                        
-                    response.writeHead(302, { 'Location':'/' });
-                    content = '';
-                }   
-                self.setContentType(parsed.pathname, response);                             
-                response.write(content, encoding);
-                response.end();
-            }            
+            self.setContentType(parsed.pathname, response);                             
+            response.write(content, encoding);
+            response.end();                    
         }        
     });
     this.io = require('socket.io')(this.http);
