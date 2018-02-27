@@ -3,7 +3,7 @@ var ip = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 var home = 'http://' + ip + ':' + port;
 
 var LocalBCeIDServer = require('./app/server/fake.bceid.form');
-localBCeIDServer = new LocalBCeIDServer({token:'monday', home:home});
+localBCeIDServer = new LocalBCeIDServer({token:'monday'});
 
 var Server = require('./app/server/server');
 var server = new Server();

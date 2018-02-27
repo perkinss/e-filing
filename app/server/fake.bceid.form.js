@@ -49,8 +49,8 @@ Authentificator.prototype.handle = function(request, response) {
     }
 };
 
-Authentificator.prototype.buildLoginUrl = function(target) {
-    return this.home + '/login?then=http://' + target
+Authentificator.prototype.buildLoginUrl = function(base, target) {
+    return 'http://' + base + '/login?then=http://' + target
 };
 
 Authentificator.prototype.isLogin = function(url) {

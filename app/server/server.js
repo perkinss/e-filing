@@ -34,7 +34,7 @@ Server.prototype.start = function (port, ip, done) {
                 }
                 else {
                     var target = request.headers['host'] + parsed.pathname;
-                    var location = self.guardian.buildLoginUrl(target);
+                    var location = self.guardian.buildLoginUrl(request.headers['host'], target);
                     response.writeHead(302, { 'Location':location });
                     response.write('', encoding);
                     response.end();

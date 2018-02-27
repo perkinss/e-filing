@@ -14,7 +14,7 @@ describe('Form access', function() {
     var localLoginServer;
 
     beforeEach(function(done) {
-        localLoginServer = new LocalServer({token:'monday', home:home});
+        localLoginServer = new LocalServer({token:'monday'});
         server = new Server();
         server.useGuardian(localLoginServer);
         server.start(port, ip, done);
