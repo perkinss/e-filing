@@ -42,7 +42,6 @@ Server.prototype.start = function (port, ip, done) {
         }
         else {
             if (self.bceidServer.isLogin(parsed.pathname)) {
-                response.statusCode = 200;
                 self.bceidServer.handleLogin(request, response);                
             } 
             else {                
