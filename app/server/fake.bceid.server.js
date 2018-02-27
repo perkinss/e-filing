@@ -30,6 +30,14 @@ FakeBceIDServer.prototype.isLogin = function(url) {
     return /^\/login$/.test(url);
 };
 
+FakeBceIDServer.prototype.isLogout = function(url) {
+    return /^\/logout$/.test(url);
+};
+
+FakeBceIDServer.prototype.logout = function(response) {
+    response.setHeader('Set-Cookie', ['token=unknown']);
+};
+
 FakeBceIDServer.prototype.handleLogin = function(request, response) {
     var parsed = url.parse(request.url, true);
     if ('POST' == request.method) {    

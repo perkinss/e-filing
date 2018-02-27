@@ -14,7 +14,7 @@ describe('index.html', function() {
 
         beforeEach(function(done) {
             server = new Server();
-            server.useBceidServer({ isLogin:function() { return false;} });
+            server.useBceidServer({ isLogin:function() { return false;}, isLogout:function() { return false;} });
             server.start(port, ip, done);
         });
 

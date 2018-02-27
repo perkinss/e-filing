@@ -36,7 +36,7 @@ describe.skip('Modifying a nested file on Windows or MacOS', function() {
         filePath = path.join(__dirname, '../../../app/client/css/' + fileName + '.html');
         fs.writeFileSync(filePath, content);
         server = new Server();
-        server.useBceidServer({ isLogin:function() { return false;} });
+        server.useBceidServer({ isLogin:function() { return false;}, isLogout:function() { return false;} });
         server.start(port, ip, done);
     });
 

@@ -9,7 +9,7 @@ Server.prototype.start = function (port, ip, done) {
     if (this.bceidServer === undefined 
         ||this.bceidServer.isLogin === undefined 
     ) {
-        throw '{ isLogin:function } bceidServer is mandatory';        
+        throw '{ isLogin:function, isLogout:function } bceidServer is mandatory';        
     }
     var self = this;
     this.http = require('http').createServer(function(request, response) {
@@ -17,13 +17,22 @@ Server.prototype.start = function (port, ip, done) {
 
         var parsed = url.parse(request.url, true);
         var filePath = path.join(__dirname, '../client/' + parsed.pathname);
-        var encoding = 'utf8';
+        var encoding = 'binary';
         var content = '';
-        try { content = fs.readFileSync(filePath).toString(); }
+        try { 
+            content = fs.readFileSync(filePath);
+            encoding = 'binary';
+            if (! /\.png$/.test(parsed.pathname)) {
+                content = content.toString();
+                encoding = 'utf8';
+            }
+        }
         catch (error) { 
             response.statusCode = 404; 
             content = request.url;
+            encoding = 'utf8';
         }
+
         if (/forms/.test(parsed.pathname)) {    
             self.bceidServer.validateToken(request, function(status) {
                 if (status.code == 200) {
@@ -45,28 +54,12 @@ Server.prototype.start = function (port, ip, done) {
                 self.bceidServer.handleLogin(request, response);                
             } 
             else {                
-                if (/^\/logout$/.test(parsed.pathname)) {       
-                    response.setHeader('Set-Cookie', ['token=unknown']);     
+                if (self.bceidServer.isLogout(parsed.pathname)) {   
+                    self.bceidServer.logout(response);                        
                     response.writeHead(302, { 'Location':'/' });
                     content = '';
-                }                
-                if (/\.js$/.test(parsed.pathname)) {
-                    response.setHeader('Content-Type', 'application/javascript');
-                }
-                if (/\.css$/.test(parsed.pathname)) {
-                    response.setHeader('Content-Type', 'text/css');
-                }
-                if (/\.html$/.test(parsed.pathname)) {
-                    response.setHeader('Content-Type', 'text/html');
-                }
-                if (/\.data$/.test(parsed.pathname)) {
-                    response.setHeader('Content-Type', 'text/plain');
-                }
-                if (/\.png$/.test(parsed.pathname)) {
-                    response.setHeader('Content-Type', 'image/png');
-                    content = fs.readFileSync(filePath);
-                    encoding = 'binary';
-                }
+                }   
+                self.setContentType(parsed.pathname, response);                             
                 response.write(content, encoding);
                 response.end();
             }            
@@ -85,6 +78,24 @@ Server.prototype.start = function (port, ip, done) {
 Server.prototype.sendReload = function() {
     this.io.emit('reload', {});
 };
+
+Server.prototype.setContentType = function(path, response) {
+    if (/\.js$/.test(path)) {
+        response.setHeader('Content-Type', 'application/javascript');
+    }
+    if (/\.css$/.test(path)) {
+        response.setHeader('Content-Type', 'text/css');
+    }
+    if (/\.html$/.test(path)) {
+        response.setHeader('Content-Type', 'text/html');
+    }
+    if (/\.data$/.test(path)) {
+        response.setHeader('Content-Type', 'text/plain');
+    }
+    if (/\.png$/.test(path)) {
+        response.setHeader('Content-Type', 'image/png');                    
+    }
+}
 
 Server.prototype.stop = function (done) {
     if (this.http) {
