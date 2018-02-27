@@ -12,7 +12,7 @@ describe('logout', function() {
 
     beforeEach(function(done) {                
         server = new Server();
-        server.useGuardian({ isLogin:function() { return false;} });
+        server.useBceidServer({ isLogin:function() { return false;} });
         server.start(port, ip, done);
     });
 

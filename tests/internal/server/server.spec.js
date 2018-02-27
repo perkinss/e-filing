@@ -11,7 +11,7 @@ describe('Server', function() {
 
     beforeEach(function(done) {
         server = new Server();
-        server.useGuardian({ isLogin:function() { return false;} });
+        server.useBceidServer({ isLogin:function() { return false;} });
         server.start(port, ip, done);
     });
 
@@ -24,12 +24,12 @@ describe('Server', function() {
         var server;
         try {
             server = new Server();
-            server.useGuardian({ any:'value' });
+            server.useBceidServer({ any:'value' });
             server.start(port+1, ip, server.stop(function() {}));            
         }
         catch (error) {
             failed = true;
-            expect(error).to.equal('{ isLogin:function } guardian is mandatory');
+            expect(error).to.equal('{ isLogin:function } bceidServer is mandatory');
         }
         
         expect(failed).to.equal(true);
@@ -51,9 +51,12 @@ describe('Server', function() {
     });
 
     it('can serve a png', function(done) {
-        request(home + '/images/logo.png', function(err, response, body) {
+        request({ url:home + '/images/logo.png', encoding: 'binary' }, function(err, response, body) {
+            var expectedContent = require('fs')
+                .readFileSync('app/client/images/logo.png', 'binary');
             expect(response.statusCode).to.equal(200);
             expect(response.headers['content-type']).to.equal('image/png');
+            expect(body).to.equal(expectedContent);
             done();
         });
     });
