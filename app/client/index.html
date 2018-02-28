@@ -102,7 +102,9 @@
         <div class="row">
 
             <div id="main-content" role="main" class="contentPageMainColumn col-sm-12">
-                <a id="main-content-anchor"></a>                
+                <a id="main-content-anchor"></a>   
+                
+                <label id="news"></label>
 
                 <div id="body">
                     <h2>Available forms</h2>
@@ -176,6 +178,12 @@
         var socket = io();
         socket.on('reload', function() {
             document.location.reload(true);
+        });
+        socket.on('toto', function(data) {
+            var news = JSON.parse(data);
+            var date = new Date(news.timestamp);
+            var message = date + ': ' + news.message;
+            document.getElementById('news').innerHTML = message;
         });
     </script>
 </body>

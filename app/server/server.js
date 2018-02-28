@@ -2,6 +2,17 @@ var url = require('url');
 var fs = require('fs');
 var path = require('path');
 
+var firebase = require('firebase');
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyAYx7b7qF47dy8vAnExOaFW5nQCP0EWriw",
+    authDomain: "sandbox-5f095.firebaseapp.com",
+    databaseURL: "https://sandbox-5f095.firebaseio.com",
+    storageBucket: "sandbox-5f095.appspot.com",
+    messagingSenderId: "825996076845"
+};
+firebase.initializeApp(config);
+
 function Server() {    
 };
 
@@ -68,6 +79,12 @@ Server.prototype.start = function (port, ip, done) {
     this.io.on('connection', function(socket) {
     });
     var self = this;
+
+    this.news = firebase.database().ref('/news').limitToLast(1);
+    this.news.on('child_added', function(data) {
+        self.sendNews(data.val());
+    });
+    
     fs.watch(path.join(__dirname, '../client/'), { recursive:true }, function(e, file) {
         self.sendReload();
     });
@@ -76,6 +93,11 @@ Server.prototype.start = function (port, ip, done) {
 
 Server.prototype.sendReload = function() {
     this.io.emit('reload', {});
+};
+
+Server.prototype.sendNews = function(data) {
+    console.log('sending ' + JSON.stringify(data));
+    this.io.emit('toto', JSON.stringify(data));
 };
 
 Server.prototype.setContentType = function(path, response) {
