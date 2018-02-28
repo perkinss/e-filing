@@ -58,8 +58,8 @@
     <!-- CUSTOM CSS -->
     <link href="/css/custom-main.css" rel="stylesheet"/>
     <link href="/css/custom-form.css" rel="stylesheet"/>
-    <link href="/css/form.css" rel="stylesheet"/>    
-    <link href="/css/form.2.css" rel="stylesheet"/>    
+    <link href="/css/form.css" rel="stylesheet"/>
+    <link href="/css/form.2.css" rel="stylesheet"/>
 
     <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 
@@ -81,7 +81,7 @@
                     <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 header-main-left">
                         <div id="logo">
                             <a href="http://gov.bc.ca"><img src="/images/gov3_bc_logo.png" alt="Province of British Columbia" title="Province of British Columbia logo" /></a>
-                        </div>                                                
+                        </div>
                     </div>
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                         <div class="bcgov-title">
@@ -111,7 +111,7 @@
                 </li>
             </ol>
         </div>
-        
+
         <!-- PAGE CONTENT -->
         <div class="row">
 
@@ -130,47 +130,22 @@
                     <h1>NOTICE OF APPEARANCE</h1>
                     Form 2 (RULES 5 (A), 13 (A) AND 17 (A))
                 </div>
-    
+
                 <div class="form-section">
-                    <h2>Appeal case information</h2>
-                    Find the appeal case you want to link this notice to.
-
-                    <table>
-                        <tr>
-                            <td>LEVEL OF COURT</td>
-                            <td>COURT OF APPEAL FILE NO.</td>
-                            <td>SUPREME COURT REGISTRY</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td><input disabled value="Court of appeal" /></td>
-                            <td><input name="file-no" autofocus value="20160430" /></td>
-                            <td>
-                                <select>
-                                    <option>Victoria</option>
-                                    <option>Vancouver</option>
-                                </select>
-                            </td>
-                            <td>
-                                <button class="btn btn-primary btn-green">Find</button>
-                            </td>
-                        </tr>
-                    </table>
-                    
-                    <hr/>
-
-                    <h3>Case Results</h3>
-                    Select the case from the matching results below
+                    <h2>Your existing court of appeal cases</h2>
+                    Select one of the following:
                     <ul id="cases-found">
                         <li>
-                            <a>DENT, Jason vs. JONES, Bob</a>
+                            <a>20160430: DENT, Jason vs. JONES, Bob</a>
+                        </li>
+                        <li>
+                            <a>78600387: BATS, jill vs. JOBS, Mark</a>
                         </li>
                     </ul>
                 </div>
 
                 <div class="form-section">
-                    <h2>Parties involved (informative)</h2>
-                    Find the court of appeal case this notice of appearance is refering to.
+                    <h2>Parties involved in case 20160430</h2>
 
                     <table id="parties">
                         <tr>
@@ -216,12 +191,12 @@
                             <td></td>
                         </tr>
                     </table>
-                </div>   
-                
-                
+                </div>
+
+
                 <div class="form-section">
                     <h2>Enter an appearance on behalf of</h2>
-                    
+
                     Respondent's name:
                     <select>
                         <option>Jason Dent</option>
@@ -229,19 +204,23 @@
                         <option>Phil Adams</option>
                         <option>CRUSTY PIZZA INC.</option>
                     </select>
-                    
+
                     <br/>
-                    Respondent's addresse:
-                    <input name="respondent-address"/>
+                    Respondent's mail address:
+                    <input size="40" style="background-color:lightyellow;" name="respondent-address" value="123 Harbour street, Victoria, BC"/>
+
+                    <br/>
+                    Respondent's e-mail:
+                    <input name="respondent-e-mail"/>
 
                     <br/>
                     Respondent/Solicitor for the respondent:
                     <input name="respondent-solicitor"/>
-                    
+
                 </div>
 
                 <button id="confirm" class="btn btn-primary btn-green pull-right">Confirm</button>
-            </div>        
+            </div>
         </div>
         <!-- PAGE CONTENT -->
     </div>

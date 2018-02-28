@@ -6,6 +6,8 @@
 	padding-top: 15px;
 	padding-bottom: 5px;
 	padding-left:50px;
+	font-size: 2rem;
+	font-weight: bold;
 }
 #steps ol {
 	padding: 0px;
@@ -24,16 +26,17 @@
 	border-radius: 50%;
 	vertical-align: middle;
 	text-align: center;
-	width: 50px;
-	height: 50px;
-	line-height: 50px;
+	width: 40px;
+	height: 40px;
+	line-height: 33px;
 }
 .checked {
-	background-color: green;
-	color: white;
+	background-color: white;
+	color: lightgray;
+	border-color: lightgray;
 }
 .done {
-	color: green;
+	color: lightgray;
 }
 .in-progress {
 	color: black;
@@ -44,7 +47,7 @@
 	border-color: lightgray;
 }
 .step-title {
-	margin-left: 1px;
+	margin-left: 5px;
 }
 .form-title {
 	padding-top: 15px;
