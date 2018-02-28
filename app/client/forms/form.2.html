@@ -58,7 +58,8 @@
     <!-- CUSTOM CSS -->
     <link href="/css/custom-main.css" rel="stylesheet"/>
     <link href="/css/custom-form.css" rel="stylesheet"/>
-    <link href="/css/form.css" rel="stylesheet"/>
+    <link href="/css/form.css" rel="stylesheet"/>    
+    <link href="/css/form.2.css" rel="stylesheet"/>    
 
     <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 
@@ -131,8 +132,8 @@
                 </div>
     
                 <div class="form-section">
-                    <h2>Court of appeal case information</h2>
-                    Find the court of appeal case this notice of appearance is refering to.
+                    <h2>Appeal case information</h2>
+                    Find the appeal case you want to link this notice to.
 
                     <table>
                         <tr>
@@ -143,7 +144,7 @@
                         </tr>
                         <tr>
                             <td><input disabled value="Court of appeal" /></td>
-                            <td><input name="file-no" autofocus/></td>
+                            <td><input name="file-no" autofocus value="20160430" /></td>
                             <td>
                                 <select>
                                     <option>Victoria</option>
@@ -155,11 +156,92 @@
                             </td>
                         </tr>
                     </table>
+                    
+                    <hr/>
+
+                    <h3>Case Results</h3>
+                    Select the case from the matching results below
+                    <ul id="cases-found">
+                        <li>
+                            <a>DENT, Jason vs. JONES, Bob</a>
+                        </li>
+                    </ul>
                 </div>
+
+                <div class="form-section">
+                    <h2>Parties involved (informative)</h2>
+                    Find the court of appeal case this notice of appearance is refering to.
+
+                    <table id="parties">
+                        <tr>
+                            <th>Appellant(s)</th>
+                            <th>Party (Not involved)</th>
+                            <th>Respondent(s)</th>
+                            <tr></tr>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>PLAINTIF</span>
+                                <br/>
+                                Jason Dent by way of their litigation guardian, Maria Terresa Dent
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <span>DEFENDANT</span>
+                                <br/>
+                                Bob Jones
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <span>DEFENDANT</span>
+                                <br/>
+                                Phil Adams
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <span>DFENDANT</span>
+                                <br/>
+                                CRUSTY PIZZA INC.
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>   
                 
-            </div>
+                
+                <div class="form-section">
+                    <h2>Enter an appearance on behalf of</h2>
+                    
+                    Respondent's name:
+                    <select>
+                        <option>Jason Dent</option>
+                        <option>Bob Jones</option>
+                        <option>Phil Adams</option>
+                        <option>CRUSTY PIZZA INC.</option>
+                    </select>
+                    
+                    <br/>
+                    Respondent's addresse:
+                    <input name="respondent-address"/>
 
+                    <br/>
+                    Respondent/Solicitor for the respondent:
+                    <input name="respondent-solicitor"/>
+                    
+                </div>
 
+                <button id="confirm" class="btn btn-primary btn-green pull-right">Confirm</button>
+            </div>        
         </div>
         <!-- PAGE CONTENT -->
     </div>

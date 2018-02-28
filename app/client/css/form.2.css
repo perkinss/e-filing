@@ -1,0 +1,10 @@
+#parties {
+	width: 100%
+}
+#parties th {
+	background-color: lightblue;
+}
+#parties th, #parties td {
+	text-align: center;
+	width: 33%;
+}
