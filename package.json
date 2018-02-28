@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "private": false,
     "dependencies": {
+        "firebase": "^4.10.1",
         "querystring": "^0.2.0"
     },
     "devDependencies": {

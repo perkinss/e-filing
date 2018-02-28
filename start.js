@@ -13,5 +13,20 @@ server.start(port, ip, function() {
     console.log(ip + ' listening on port ' + port);
 });
 
+var firebase = require('firebase');
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyAYx7b7qF47dy8vAnExOaFW5nQCP0EWriw",
+    authDomain: "sandbox-5f095.firebaseapp.com",
+    databaseURL: "https://sandbox-5f095.firebaseio.com",
+    storageBucket: "sandbox-5f095.appspot.com",
+    messagingSenderId: "825996076845"
+    };
+firebase.initializeApp(config);
+var news = firebase.database().ref('/news').limitToLast(3);
+news.on('child_added', function(data) {
+    console.log(data.val());
+});
+
 module.exports = server;
 module.exports.port = port;
