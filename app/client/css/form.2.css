@@ -5,6 +5,10 @@
 	background-color: lightblue;
 }
 #parties th, #parties td {
-	text-align: center;
-	width: 33%;
+	text-align: left;
+	width: 40%;
+}
+#parties td.role {
+	font-weight: bold;
+	text-align: left;
 }

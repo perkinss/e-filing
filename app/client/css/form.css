@@ -30,13 +30,10 @@
 	height: 40px;
 	line-height: 33px;
 }
-.checked {
+.done {
 	background-color: white;
 	color: lightgray;
 	border-color: lightgray;
-}
-.done {
-	color: lightgray;
 }
 .in-progress {
 	color: black;
